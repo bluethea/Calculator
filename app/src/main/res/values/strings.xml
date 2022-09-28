@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Calculator</string>
+    <string name="editTextNumber">0</string>
+    <string name="button1">←</string>
+    <string name="button2">CE</string>
+    <string name="button3">C</string>
+    <string name="button4">±</string>
+    <string name="button5">√</string>
+    <string name="button6">7</string>
+    <string name="button7">8</string>
+    <string name="button8">9</string>
+    <string name="button9">/</string>
+    <string name="button10">%</string>
+    <string name="button11">4</string>
+    <string name="button12">5</string>
+    <string name="button13">6</string>
+    <string name="button14">*</string>
+    <string name="button15">1/x</string>
+    <string name="button16">1</string>
+    <string name="button17">2</string>
+    <string name="button18">3</string>
+    <string name="button19">-</string>
+    <string name="button20">0</string>
+    <string name="button21">.</string>
+    <string name="button22">+</string>
+    <string name="button23">=</string>
+    <string name="chars_selection">Chars</string>
 </resources>
