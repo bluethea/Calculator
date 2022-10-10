@@ -1,11 +1,13 @@
 package com.example.calculator;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.mariuszgromada.math.mxparser.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,145 +15,173 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button click_button1 = (Button) findViewById(R.id.button1);
-        Button click_button2 = (Button) findViewById(R.id.button2);
-        Button click_button3 = (Button) findViewById(R.id.button3);
-        Button click_button4 = (Button) findViewById(R.id.button4);
-        Button click_button5 = (Button) findViewById(R.id.button5);
-        Button click_button6 = (Button) findViewById(R.id.button6);
-        Button click_button7 = (Button) findViewById(R.id.button7);
-        Button click_button8 = (Button) findViewById(R.id.button8);
-        Button click_button9 = (Button) findViewById(R.id.button9);
-        Button click_button10 = (Button) findViewById(R.id.button10);
-        Button click_button11 = (Button) findViewById(R.id.button11);
-        Button click_button12 = (Button) findViewById(R.id.button12);
-        Button click_button13 = (Button) findViewById(R.id.button13);
-        Button click_button14 = (Button) findViewById(R.id.button14);
-        Button click_button15 = (Button) findViewById(R.id.button15);
-        Button click_button16 = (Button) findViewById(R.id.button16);
-        Button click_button17 = (Button) findViewById(R.id.button17);
-        Button click_button18 = (Button) findViewById(R.id.button18);
-        Button click_button19 = (Button) findViewById(R.id.button19);
-        Button click_button20 = (Button) findViewById(R.id.button20);
+        Button click_back_btn = findViewById(R.id.back_btn);
+        Button click_clear_btn = findViewById(R.id.clear_btn);
+        Button click_plus_minus_btn = findViewById(R.id.plus_minus_btn);
+        Button click_sq_root_btn = findViewById(R.id.sq_root_btn);
+        Button click_seven_btn = findViewById(R.id.seven_btn);
+        Button click_eight_btn = findViewById(R.id.eight_btn);
+        Button click_nine_btn = findViewById(R.id.nine_btn);
+        Button click_divide_btn = findViewById(R.id.divide_btn);
+        Button click_multiply_btn = findViewById(R.id.multiply_btn);
+        Button click_four_btn = findViewById(R.id.four_btn);
+        Button click_five_btn = findViewById(R.id.five_btn);
+        Button click_six_btn = findViewById(R.id.six_btn);
+        Button click_minus_btn = findViewById(R.id.minus_btn);
+        Button click_plus_btn = findViewById(R.id.plus_btn);
+        Button click_one_btn = findViewById(R.id.one_btn);
+        Button click_two_btn = findViewById(R.id.two_btn);
+        Button click_three_btn = findViewById(R.id.three_btn);
+        Button click_point_btn = findViewById(R.id.point_btn);
+        Button click_equal_btn = findViewById(R.id.equal_btn);
+        Button click_zero_btn = findViewById(R.id.zero_btn);
 
-        EditText edit_text = (EditText) findViewById(R.id.edit_text_number);
-        click_button1.setOnClickListener(v -> {
+        EditText edit_text = findViewById(R.id.edit_text_number);
+        click_back_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             if (!TextUtils.isEmpty(retrieved_text)) {
-                String changed_text = retrieved_text.substring(retrieved_text.length() - 1);
+                String changed_text = retrieved_text.substring(0, retrieved_text.length() - 1);
                 edit_text.setText(changed_text);
             }
         });
-        click_button2.setOnClickListener(v -> {
+        click_clear_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             if (!TextUtils.isEmpty(retrieved_text)) {
                 String changed_text = "";
                 edit_text.setText(changed_text);
             }
         });
-        click_button3.setOnClickListener(v -> {
+        click_plus_minus_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             if (!TextUtils.isEmpty(retrieved_text)) {
-                String changed_text = retrieved_text.substring(retrieved_text.length() - 1);
+                String temporary_text = retrieved_text.replaceAll("[0-9]+$","");
+                String changed_text;
+                if (temporary_text.endsWith("-")) {
+                    changed_text = temporary_text.substring(0, retrieved_text.length() - 1).concat("+").concat(retrieved_text.substring(retrieved_text.replaceAll("[0-9]+$","").length()));
+                }
+                else {
+                    changed_text = temporary_text.substring(0, retrieved_text.length() - 1).concat("-").concat(retrieved_text.substring(retrieved_text.replaceAll("[0-9]+$","").length()));
+                }
                 edit_text.setText(changed_text);
             }
         });
-        click_button4.setOnClickListener(v -> {
+        click_sq_root_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             if (!TextUtils.isEmpty(retrieved_text)) {
-                //placeholder
+                String changed_text = retrieved_text.concat("√");
+                edit_text.setText(changed_text);
             }
         });
-        click_button5.setOnClickListener(v -> {
+        click_seven_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             String changed_text = retrieved_text.concat("7");
             edit_text.setText(changed_text);
         });
-        click_button6.setOnClickListener(v -> {
+        click_eight_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             String changed_text = retrieved_text.concat("8");
             edit_text.setText(changed_text);
         });
-        click_button7.setOnClickListener(v -> {
+        click_nine_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             String changed_text = retrieved_text.concat("9");
             edit_text.setText(changed_text);
         });
-        click_button8.setOnClickListener(v -> {
+        click_divide_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
-            if (!TextUtils.isEmpty(retrieved_text)) {
-                String changed_text = retrieved_text.concat("/");
+            if (!TextUtils.isEmpty(retrieved_text) && !retrieved_text.endsWith("/")) {
+                String changed_text;
+                if (retrieved_text.endsWith("*") || retrieved_text.endsWith("-") || retrieved_text.endsWith("+")) {
+                    changed_text = retrieved_text.substring(0, retrieved_text.length() - 1).concat("/");
+                }
+                else {
+                    changed_text = retrieved_text.concat("/");
+                }
                 edit_text.setText(changed_text);
             }
         });
-        click_button9.setOnClickListener(v -> {
+        click_multiply_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
-            if (!TextUtils.isEmpty(retrieved_text)) {
-                String changed_text = retrieved_text.concat("*");
+            if (!TextUtils.isEmpty(retrieved_text) && !retrieved_text.endsWith("*")) {
+                String changed_text;
+                if (retrieved_text.endsWith("/") || retrieved_text.endsWith("-") || retrieved_text.endsWith("+")) {
+                    changed_text = retrieved_text.substring(0, retrieved_text.length() - 1).concat("*");
+                } else {
+                    changed_text = retrieved_text.concat("*");
+                }
                 edit_text.setText(changed_text);
-            }
-        });
-        click_button10.setOnClickListener(v -> {
+                }
+            });
+        click_four_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             if (!TextUtils.isEmpty(retrieved_text)) {
                 String changed_text = retrieved_text.concat("4");
                 edit_text.setText(changed_text);
             }
         });
-        click_button11.setOnClickListener(v -> {
+        click_five_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             String changed_text = retrieved_text.concat("5");
             edit_text.setText(changed_text);
         });
-        click_button12.setOnClickListener(v -> {
+        click_six_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             String changed_text = retrieved_text.concat("6");
             edit_text.setText(changed_text);
         });
-        click_button13.setOnClickListener(v -> {
+        click_minus_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
-            if (!TextUtils.isEmpty(retrieved_text)) {
-                String changed_text = retrieved_text.concat("-");
+            if (!TextUtils.isEmpty(retrieved_text) && !retrieved_text.endsWith("-")) {
+                String changed_text;
+                if (retrieved_text.endsWith("/") || retrieved_text.endsWith("*") || retrieved_text.endsWith("+")) {
+                    changed_text = retrieved_text.substring(0, retrieved_text.length() - 1).concat("-");
+                } else {
+                    changed_text = retrieved_text.concat("-");
+                }
                 edit_text.setText(changed_text);
             }
         });
-        click_button14.setOnClickListener(v -> {
+        click_plus_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
-            if (!TextUtils.isEmpty(retrieved_text)) {
-                String changed_text = retrieved_text.concat("+");
+            if (!TextUtils.isEmpty(retrieved_text) && !retrieved_text.endsWith("+")) {
+                String changed_text;
+                if (retrieved_text.endsWith("/") || retrieved_text.endsWith("-") || retrieved_text.endsWith("*")) {
+                    changed_text = retrieved_text.substring(0, retrieved_text.length() - 1).concat("+");
+                } else {
+                    changed_text = retrieved_text.concat("+");
+                }
                 edit_text.setText(changed_text);
             }
         });
-        click_button15.setOnClickListener(v -> {
+        click_one_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             String changed_text = retrieved_text.concat("1");
             edit_text.setText(changed_text);
         });
-        click_button16.setOnClickListener(v -> {
+        click_two_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             String changed_text = retrieved_text.concat("2");
             edit_text.setText(changed_text);
         });
-        click_button17.setOnClickListener(v -> {
+        click_three_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             String changed_text = retrieved_text.concat("3");
             edit_text.setText(changed_text);
         });
-        click_button18.setOnClickListener(v -> {
+        click_point_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             if (!TextUtils.isEmpty(retrieved_text)) {
                 String changed_text = retrieved_text.concat(".");
                 edit_text.setText(changed_text);
             }
         });
-        click_button19.setOnClickListener(v -> {
+        click_equal_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
-            if (!TextUtils.isEmpty(retrieved_text)) {
-                String changed_text = retrieved_text.concat("=");
-                edit_text.setText(changed_text);
-            }
+            Expression exp = new Expression(retrieved_text);
+            String changed_text = String.valueOf(exp.calculate());
+            edit_text.setText(changed_text);
         });
-        click_button20.setOnClickListener(v -> {
+        click_zero_btn.setOnClickListener(v -> {
             String retrieved_text = edit_text.getText().toString();
             String changed_text = retrieved_text.concat("0");
             edit_text.setText(changed_text);
